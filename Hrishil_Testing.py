@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 import math
+from numpy import array
 from sklearn.metrics import mean_squared_error
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
@@ -59,7 +60,27 @@ train_predict=scaler.inverse_transform(train_predict)
 test_predict=scaler.inverse_transform(test_predict)
 
 math.sqrt(mean_squared_error(y_train,train_predict))
-math.sqrt(mean_squared_error(ytest,test_predict))
+math.sqrt(mean_squared_error(y_test,test_predict))
+
+look_back = 500
+trainPredictPlot = numpy.empty_like(close_data)
+trainPredictPlot[:, :] = np.nan
+trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
+
+testPredictPlot = numpy.empty_like(close_data)
+testPredictPlot[:, :] = numpy.nan
+testPredictPlot[len(train_predict)+(look_back*2)+1:len(df1)-1, :] = test_predict
+
+plt.plot(scaler.inverse_transform(close_data))
+plt.plot(trainPredictPlot)
+plt.plot(testPredictPlot)
+plt.show()
+
+x_input = test_data[].reshape(1, -1)
+
+temp_input = list(x_input)
+temp_input = temp_input[0].tolist()
+
 
 
 # print(close_data)
