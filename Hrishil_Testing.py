@@ -51,7 +51,7 @@ model.add(LSTM(50))
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
-model.fit(X_train,y_train,validation_data=(X_test,ytest),epochs=100,batch_size=64,verbose=1)
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=100,batch_size=64,verbose=1)
 
 train_predict=model.predict(X_train)
 test_predict=model.predict(X_test)
@@ -63,12 +63,12 @@ math.sqrt(mean_squared_error(y_train,train_predict))
 math.sqrt(mean_squared_error(y_test,test_predict))
 
 look_back = 500
-trainPredictPlot = numpy.empty_like(close_data)
+trainPredictPlot = np.empty_like(close_data)
 trainPredictPlot[:, :] = np.nan
 trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
 
-testPredictPlot = numpy.empty_like(close_data)
-testPredictPlot[:, :] = numpy.nan
+testPredictPlot = np.empty_like(close_data)
+testPredictPlot[:, :] = np.nan
 testPredictPlot[len(train_predict)+(look_back*2)+1:len(df1)-1, :] = test_predict
 
 plt.plot(scaler.inverse_transform(close_data))
@@ -76,7 +76,7 @@ plt.plot(trainPredictPlot)
 plt.plot(testPredictPlot)
 plt.show()
 
-x_input = test_data[].reshape(1, -1)
+x_input = test_data[:].reshape(1, -1)
 
 temp_input = list(x_input)
 temp_input = temp_input[0].tolist()
