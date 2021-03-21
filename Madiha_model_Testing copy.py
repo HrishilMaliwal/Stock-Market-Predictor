@@ -9,13 +9,17 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
+def preprocess(df):
+    df.fillna(method='ffill', inplace=True)
+    return df
 
-
-df = pd.read_csv("WIPRO.csv")
-df = df[2:]
-close_data = df['Close.6'].astype('float64')
+df = pd.read_csv("df1.csv")
+df=preprocess(df)
+close_data = df['Close'].astype('float64')
+df=df.drop('Adj Close',axis=1)
 
 plt.plot(close_data)
+plt.show()
 
 scaler = MinMaxScaler(feature_range=(0, 1))
 close_data = scaler.fit_transform(np.array(close_data).reshape(-1, 1))
