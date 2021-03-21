@@ -11,7 +11,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
 
 
-df = pd.read_csv("stockdata.csv")
+df = pd.read_csv("WIPRO.csv")
 df = df[2:]
 close_data = df['Close.6'].astype('float64')
 
