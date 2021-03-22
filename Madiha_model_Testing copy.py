@@ -20,7 +20,7 @@ df=df.drop('Adj Close',axis=1)
 
 plt.plot(close_data)
 plt.show()
-
+#lstm sensitive to scalability
 scaler = MinMaxScaler(feature_range=(0, 1))
 close_data = scaler.fit_transform(np.array(close_data).reshape(-1, 1))
 
@@ -29,7 +29,7 @@ test_size = len(close_data) - train_size
 train_data = close_data[:train_size]
 test_data = close_data[train_size:]
 
-
+#creating a dataset for timesteps wrt lstm
 def create_dataset(dataset, time_step):
     dataX = []
     dataY = []
@@ -46,28 +46,28 @@ time_step = 500
 X_train, y_train = create_dataset(train_data, time_step)
 X_test, y_test = create_dataset(test_data, time_step)
 
-X_train = X_train.reshape(X_train.shape[0], X_train.shape[0], 1)
+X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
 model = Sequential()
-model.add(LSTM(50, return_sequences=True, input_shape=(100, 1)))
-model.add(LSTM(50))
+model.add(LSTM(50, return_sequences=True, input_shape=(500, 1)))#shape is 500 bec 500 timesteps
+model.add(LSTM(50))#stacked lstm 
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
-model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=100,batch_size=64,verbose=1)
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=30,batch_size=64,verbose=1)
 
-train_predict = model.predict(X_train)
-test_predict = model.predict(X_test)
+train_predict = model.predict(X_train) #output for training data(results expected to be good)
+test_predict = model.predict(X_test)#output for testing data(test output)
 
-train_predict = scaler.inverse_transform(train_predict)
+train_predict = scaler.inverse_transform(train_predict)#inversing the minmax scaler
 test_predict = scaler.inverse_transform(test_predict)
 
 # math.sqrt(mean_squared_error(y_train,train_predict))
 # math.sqrt(mean_squared_error(y_test,test_predict))
 
 look_back = 500
-trainPredictPlot = np.empty_like(close_data)
+trainPredictPlot = np.empty_like(close_data) 
 trainPredictPlot[:, :] = np.nan
 trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
 
@@ -90,7 +90,7 @@ n_steps = 500
 i = 0
 while(i < 30):
 
-    if(len(temp_input) > 100):
+    if(len(temp_input) > 500):
         x_input = np.array(temp_input[1:])
         print("{} day input {}".format(i, x_input))
         x_input=x_input.reshape(1,-1)
@@ -114,8 +114,8 @@ while(i < 30):
 print(lst_output)
 
 
-day_new = np.arange(1, 101)
-day_pred = np.arange(101, 131)
+day_new = np.arange(1, 501)
+day_pred = np.arange(501, 531)
 
 plt.plot(day_new, scaler.inverse_transform(close_data['''XYZ''':]))
 plt.plot(day_pred, scaler.inverse_transform(lst_output))
