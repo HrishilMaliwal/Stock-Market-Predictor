@@ -9,6 +9,8 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
+
+
 def preprocess(df):
     df.fillna(method='ffill', inplace=True)
     return df
