@@ -79,8 +79,8 @@ plt.plot(scaler.inverse_transform(close_data))
 plt.plot(trainPredictPlot)
 plt.plot(testPredictPlot)
 plt.show()
-
-x_input = test_data[:].reshape(1, -1)
+abc=len(test_data)-500
+x_input = test_data[abc:].reshape(1, -1)
 
 temp_input = list(x_input)
 temp_input = temp_input[0].tolist()
@@ -94,7 +94,7 @@ while(i < 30):
         x_input = np.array(temp_input[1:])
         print("{} day input {}".format(i, x_input))
         x_input=x_input.reshape(1,-1)
-        x_input = x_input.reshape((1, n_steps, 1))
+        x_input = x_input.reshape((1, n_steps, 1)) #GETTING ERROR HERE 
         yhat = model.predict(x_input, verbose=0)
         print("{} day output {}".format(i,yhat))
         temp_input.extend(yhat[0].tolist())
@@ -105,7 +105,7 @@ while(i < 30):
     else:
         x_input = x_input.reshape(1, n_steps, 1)
         yhat = model.predict(x_input, verbose=0)
-        print(yhat[0])
+        #print(yhat[0])
         temp_input.extend(yhat[0].tolist())
         print(len(temp_input))
         lst_output.extend(yhat.tolist())
@@ -116,17 +116,19 @@ print(lst_output)
 
 day_new = np.arange(1, 501)
 day_pred = np.arange(501, 531)
-
-plt.plot(day_new, scaler.inverse_transform(close_data['''XYZ''':]))
+abc2=len(close_data)-500
+plt.plot(day_new, scaler.inverse_transform(close_data[abc2:]))
 plt.plot(day_pred, scaler.inverse_transform(lst_output))
 
 df = close_data.tolist()
 df.extend(lst_output)
-plt.plot(df['''XYZ''':])
+plt.plot(df[len(close_data)-100:])
+plt.show()
 
 df = scaler.inverse_transform(df).tolist()
 
 plt.plot(df)
+plt.show()
 
 
 
