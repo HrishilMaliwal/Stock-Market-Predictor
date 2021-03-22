@@ -55,7 +55,7 @@ model.add(LSTM(50))#stacked lstm
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
-model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=30,batch_size=64,verbose=1)
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=1,batch_size=64,verbose=1)
 
 train_predict = model.predict(X_train) #output for training data(results expected to be good)
 test_predict = model.predict(X_test)#output for testing data(test output)
@@ -73,14 +73,14 @@ trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
 
 testPredictPlot = np.empty_like(close_data)
 testPredictPlot[:, :] = np.nan
-testPredictPlot[len(train_predict)+(look_back*2)+1:len(df1)-1, :] = test_predict
+testPredictPlot[len(train_predict)+(look_back*2)+1:len(close_data)-1, :] = test_predict
 
 plt.plot(scaler.inverse_transform(close_data))
 plt.plot(trainPredictPlot)
 plt.plot(testPredictPlot)
 plt.show()
 
-x_input = test_data['''XYZ''':].reshape(1, -1)
+x_input = test_data[:].reshape(1, -1)
 
 temp_input = list(x_input)
 temp_input = temp_input[0].tolist()
