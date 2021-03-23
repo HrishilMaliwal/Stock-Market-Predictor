@@ -57,10 +57,10 @@ model.add(LSTM(50))#stacked lstm
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
-model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=1,batch_size=64,verbose=1)
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=50,batch_size=64,verbose=1)
 
 
-model.save('model1.h5')
+model.save('BAJAJFINSV.h5')
 
 train_predict = model.predict(X_train) #output for training data(results expected to be good)
 test_predict = model.predict(X_test)#output for testing data(test output)
