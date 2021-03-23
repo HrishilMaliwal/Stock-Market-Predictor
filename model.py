@@ -9,7 +9,8 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
-
+import pickle
+from tensorflow.keras.models import load_model
 
 def preprocess(df):
     df.fillna(method='ffill', inplace=True)
@@ -59,15 +60,18 @@ model.compile(loss='mean_squared_error', optimizer='adam')
 
 model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=1,batch_size=64,verbose=1)
 
+
+model.save('model1.h5')
+
 train_predict = model.predict(X_train) #output for training data(results expected to be good)
 test_predict = model.predict(X_test)#output for testing data(test output)
 
 train_predict = scaler.inverse_transform(train_predict)#inversing the minmax scaler
 test_predict = scaler.inverse_transform(test_predict)
 
-# math.sqrt(mean_squared_error(y_train,train_predict))
+'''math.sqrt(mean_squared_error(y_train,train_predict))
 # math.sqrt(mean_squared_error(y_test,test_predict))
-
+'''
 look_back = 500
 trainPredictPlot = np.empty_like(close_data) 
 trainPredictPlot[:, :] = np.nan
