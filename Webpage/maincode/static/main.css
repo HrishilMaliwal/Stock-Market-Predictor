@@ -84,6 +84,8 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+
 #nav{
         list-style-type: none;
         margin: 0;
@@ -111,6 +113,40 @@ li a:hover {
         color: white;
         font-weight: 420;
     }
+/* 
+HOME PAGE CSS
+
+form.example input[type=text] {
+  position: relative;
+  padding: 10px;
+  font-size: 17px;
+  border: 2px solid rgb(147, 113, 190);
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #000000;
+  color: white;
+  font-size: 17px;
+  border: 2px solid hsl(229, 29%, 45%);
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: rgb(80, 199, 56);
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}	 */
 
 
 

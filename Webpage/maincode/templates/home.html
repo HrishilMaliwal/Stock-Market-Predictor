@@ -1,6 +1,60 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Home page</h1>
-    <p>Search bar</p>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+<h1>Welcome!</h1>
+
+<style>
+body {
+  font-family: Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  position: relative;
+  padding: 10px;
+  font-size: 17px;
+  border: 2px solid rgb(147, 113, 190);
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  background: #000000;
+  color: white;
+  font-size: 17px;
+  border: 2px solid hsl(229, 29%, 45%);
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: rgb(80, 199, 56);
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+</style>
+</head>
+<body>
+    <br><br>
+<form class="example" action="/action_page.php" style="margin:auto;max-width:500px">
+  <input type="text" placeholder="Search.." name="search2">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form>
+</body>
+
+   
 {% endblock content %}
  
