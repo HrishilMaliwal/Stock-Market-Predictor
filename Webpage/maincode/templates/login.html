@@ -4,21 +4,7 @@
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Join Today</legend>
-                <div class="form-group">
-                    {{ form.username.label(class="form-control-label") }}
-
-                    {% if form.username.errors %}
-                        {{ form.username(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.username.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.username(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
+                <legend class="border-bottom mb-4">Log In</legend>
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
                     {% if form.email.errors %}
@@ -30,20 +16,6 @@
                         </div>
                     {% else %}
                         {{ form.email(class="form-control form-control-lg") }}
-                    {% endif %}
-                </div>
-				<div class="form-group">
-                    {{ form.number.label(class="form-control-label") }}
-
-                    {% if form.number.errors %}
-                        {{ form.number(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.number.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.number(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -59,39 +31,33 @@
                         {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
-                    {{ form.confirm_password.label(class="form-control-label") }}
-                    {% if form.confirm_password.errors %}
-                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
-                            {% for error in form.confirm_password.errors %}
-                                <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        {{ form.confirm_password(class="form-control form-control-lg") }}
-                    {% endif %}
+                <div class="form-check">
+                    {{ form.remember(class="form-check-input") }}
+                    {{ form.remember.label(class="form-check-label") }}
                 </div>
             </fieldset>
             <div class="form-group">
                 {{ form.submit(class="btn btn-outline-info") }}
             </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
         </form>
     </div>
     <div class="border-top pt-3">
         <small class="text-muted">
-            Already Have An Account? <a class="ml-2" href="{{ url_for('login') }}">Sign In</a>
+            Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
         </small>
     </div>
 {% endblock content %}
 
-
-
-<!-- <!DOCTYPE html>
+<!-- 
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>Registration</title>
+		<title>Login</title>
 	</head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
 	<style type="text/css">
 		#name{
 			position: relative;
@@ -121,7 +87,7 @@
 			margin-bottom: 0vh;
 			width: 100vw;
 			height: 20vh;
-			background-color: grey;
+			background-color: rgb(56, 64, 109);
 		}
 	.footer{
 			position: relative;
@@ -141,22 +107,7 @@
 			font-size: 1vw;
 			font-family: monospace;
 		}
-		#twitterlink{
-			position: absolute;
-			top: 1.5vh;
-			left: 6vw;
-			width: 40%;
-			height: 100%;
-			padding-right: 10px;
-		}
-		#instalink{
-			position: absolute;
-			top: 1.5vh;
-			left: 8vw;
-			width: 40%;
-			height: 100%;
-			padding-left: 10px;
-		}
+		
 		.section1{
 			position: relative;
 			top: 0vh;
@@ -193,45 +144,25 @@
 			margin-bottom: 0vh;
 		}	
 
-	</style>
-	<body class="body">
+	</style> 
+	<body>
 		<header class="header">
 		<div id="name">
-			 New Registration
+			Login
 		</div>
 		</header>
-		
+	
 	<section class="section1">				
 		<form align = "center">
-			Name <input type="text" name="Name" class="align">			<br><br>
-			Username<input type="text" name="Username" class="align">
-			<br>
-			<br>
-			Number <input type="text" name="Password">
-			<br>
-			<br>
 			Email<input type="email" name="Email" class="align">
 			<br>
 			<br>
 			Password<input type="password" name="Password" class="align">
 			<br>
 			<br>
-			Confirm<input type="password" name="Password" class="align">
-			<br>
-			<br>
 			<input type="submit" name="Register">
 		</form>
 		</section>
-		<!--
-		<footer class="footer">
-		<div id="footing">
-			© 2020
-			<br>
-			Find us at:
-			<a href="#twitter"><img src="twitter.jpg" id="twitterlink" alt="twitter"></a>
-			<a href="#instagram"><img src="instagram.png" id="instalink" alt="instagram"></a>
-		</div>
-	</footer>
-        
+		
 	</body>
 </html> -->
