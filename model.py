@@ -9,7 +9,6 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
-import pickle
 from tensorflow.keras.models import load_model
 
 def preprocess(df):
@@ -58,10 +57,10 @@ model.add(LSTM(50))#stacked lstm
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
-model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=1,batch_size=64,verbose=1)
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=50,batch_size=64,verbose=1)
 
 
-model.save('model1.h5')
+model.save('CIPLA.h5')
 
 train_predict = model.predict(X_train) #output for training data(results expected to be good)
 test_predict = model.predict(X_test)#output for testing data(test output)
@@ -98,11 +97,11 @@ while(i < 30):
 
     if(len(temp_input) > 500):
         x_input = np.array(temp_input[1:])
-        print("{} day input {}".format(i, x_input))
+        #print("{} day input {}".format(i, x_input))
         x_input=x_input.reshape(1,-1)
         x_input = x_input.reshape((1, n_steps, 1)) #GETTING ERROR HERE 
         yhat = model.predict(x_input, verbose=0)
-        print("{} day output {}".format(i,yhat))
+        #print("{} day output {}".format(i,yhat))
         temp_input.extend(yhat[0].tolist())
         temp_input=temp_input[1:]
         lst_output.extend(yhat.tolist())
