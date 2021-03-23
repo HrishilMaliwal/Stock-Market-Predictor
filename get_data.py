@@ -12,5 +12,6 @@ while ticker not in tickers:
 def get_data(ticktick):
     df1=yf.download(ticker)
     print(df1)
+    df1.to_csv('df1.csv')
     #return(df1)
 get_data(ticker)

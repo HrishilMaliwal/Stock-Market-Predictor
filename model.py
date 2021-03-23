@@ -9,7 +9,6 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
-import pickle
 from tensorflow.keras.models import load_model
 
 def preprocess(df):
@@ -98,11 +97,11 @@ while(i < 30):
 
     if(len(temp_input) > 500):
         x_input = np.array(temp_input[1:])
-        print("{} day input {}".format(i, x_input))
+        #print("{} day input {}".format(i, x_input))
         x_input=x_input.reshape(1,-1)
         x_input = x_input.reshape((1, n_steps, 1)) #GETTING ERROR HERE 
         yhat = model.predict(x_input, verbose=0)
-        print("{} day output {}".format(i,yhat))
+        #print("{} day output {}".format(i,yhat))
         temp_input.extend(yhat[0].tolist())
         temp_input=temp_input[1:]
         lst_output.extend(yhat.tolist())
