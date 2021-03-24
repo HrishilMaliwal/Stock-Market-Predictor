@@ -53,7 +53,7 @@ def preprocess(df):
     df.fillna(method='ffill', inplace=True)
     return df
 
-df = pd.read_csv("df1.csv")
+df = pd.read_csv("ONGC.csv")
 df=preprocess(df)
 close_data = df['Close'].astype('float64')
 df=df.drop('Adj Close',axis=1)
@@ -86,7 +86,7 @@ time_step = 500
 X_test, y_test = create_dataset(test_data, time_step)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
-model = load_model('model1.h5')
+model = load_model('ONGC.h5')
 
 look_back = 500
 abc=len(test_data)-500
