@@ -1,13 +1,24 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from maincode import app, db, bcrypt
 from maincode.forms import RegistrationForm, LoginForm
 from maincode.models import User
 from flask_login import login_user
 
-@app.route('/')
-@app.route('/home')
+stk=''
+
+@app.route('/',methods=[ 'POST','GET'])
+@app.route('/home',methods=['POST','GET'])
 def home():
-   return render_template('home.html')
+    global stk
+    if request.method == "POST":
+        stk = request.form["stock"]
+        return redirect(url_for("predict"))
+    else:
+        return render_template('home.html')
+
+@app.route("/predict")
+def predict():
+    return f"<h1>{stk}</h1>"
 
 @app.route('/about')
 def about():
