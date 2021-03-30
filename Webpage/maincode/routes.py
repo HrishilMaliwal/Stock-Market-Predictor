@@ -18,7 +18,8 @@ def home():
 
 @app.route("/predict")
 def predict():
-    return f"<h1>{stk}</h1>"
+    # return f"<h1>{stk}</h1>"
+    return render_template('predict.html')
 
 @app.route('/about')
 def about():
