@@ -1,40 +1,3 @@
-'''
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import tensorflow as tf
-import math
-from numpy import array
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import LSTM
-import pickle
-import yfinance as yf
-
-ticker_names=['TATASTEEL.NS', 'ONGC.NS', 'BAJFINANCE.NS', 
-'WIPRO.NS', 'BAJAJ-AUTO.NS', 'ITC.NS', 'BAJAJFINSV.NS',
- 'HEROMOTOCO.NS', 'TCS.NS', 'COALINDIA.NS', 'CIPLA.NS',
-  'HINDALCO.NS', 'ICICIBANK.NS', 'MM.NS', 'BHARTIARTL.NS',
-   'NESTLEIND.NS', 'KOTAKBANK.NS', 'BRITANNIA.NS', 'LT.NS',
-    'NTPC.NS', 'HDFCLIFE.NS', 'GRASIM.NS', 'TECHM.NS', 'ULTRACEMCO.NS', 'GAIL.NS', 
-    'TITAN.NS', 'RELIANCE.NS', 'MARUTI.NS', 'INDUSINDBK.NS', 
-    'SHREECEM.NS']
-def get_data(ticker):
-    df1=yf.download(ticker)
-
-def train_model(data_tick,X_train,y_train,X_test,y_test):
-    model = Sequential()
-    model.add(LSTM(50, return_sequences=True, input_shape=(500, 1)))#shape is 500 bec 500 timesteps
-    model.add(LSTM(50))#stacked lstm 
-    model.add(Dense(1))
-    model.compile(loss='mean_squared_error', optimizer='adam')
-
-    model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=1,batch_size=64,verbose=1)
-    name=data_tick+'.pkl'
-    pickle.dump(model, open(name,'wb'))'''
-
 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -53,7 +16,7 @@ def preprocess(df):
     df.fillna(method='ffill', inplace=True)
     return df
 
-df = pd.read_csv("df1.csv")
+df = pd.read_csv("ONGC.csv")
 df=preprocess(df)
 close_data = df['Close'].astype('float64')
 df=df.drop('Adj Close',axis=1)
@@ -86,7 +49,7 @@ time_step = 500
 X_test, y_test = create_dataset(test_data, time_step)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
-model = load_model('model1.h5')
+model = load_model('ONGC.h5')
 
 look_back = 500
 abc=len(test_data)-500
