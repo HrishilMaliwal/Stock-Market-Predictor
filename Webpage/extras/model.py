@@ -15,7 +15,7 @@ def preprocess(df):
     df.fillna(method='ffill', inplace=True)
     return df
 
-df = pd.read_csv("ONGC.csv")
+df = pd.read_csv("df1.csv")
 df=preprocess(df)
 close_data = df['Close'].astype('float64')
 df=df.drop('Adj Close',axis=1)
@@ -45,12 +45,45 @@ def create_dataset(dataset, time_step):
 
 
 time_step = 500
+X_train, y_train = create_dataset(train_data, time_step)
 X_test, y_test = create_dataset(test_data, time_step)
+
+X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
-model = load_model('ONGC.h5')
+model = Sequential()
+model.add(LSTM(50, return_sequences=True, input_shape=(500, 1)))#shape is 500 bec 500 timesteps
+model.add(LSTM(50))#stacked lstm 
+model.add(Dense(1))
+model.compile(loss='mean_squared_error', optimizer='adam')
 
+model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=50,batch_size=64,verbose=1)
+
+
+model.save('HINDALCO.h5')
+
+train_predict = model.predict(X_train) #output for training data(results expected to be good)
+test_predict = model.predict(X_test)#output for testing data(test output)
+
+train_predict = scaler.inverse_transform(train_predict)#inversing the minmax scaler
+test_predict = scaler.inverse_transform(test_predict)
+
+'''math.sqrt(mean_squared_error(y_train,train_predict))
+# math.sqrt(mean_squared_error(y_test,test_predict))
+'''
 look_back = 500
+trainPredictPlot = np.empty_like(close_data) 
+trainPredictPlot[:, :] = np.nan
+trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
+
+testPredictPlot = np.empty_like(close_data)
+testPredictPlot[:, :] = np.nan
+testPredictPlot[len(train_predict)+(look_back*2)+1:len(close_data)-1, :] = test_predict
+
+plt.plot(scaler.inverse_transform(close_data))
+plt.plot(trainPredictPlot)
+plt.plot(testPredictPlot)
+plt.show()
 abc=len(test_data)-500
 x_input = test_data[abc:].reshape(1, -1)
 
@@ -66,7 +99,7 @@ while(i < 30):
         x_input = np.array(temp_input[1:])
         #print("{} day input {}".format(i, x_input))
         x_input=x_input.reshape(1,-1)
-        x_input = x_input.reshape((1, n_steps, 1)) 
+        x_input = x_input.reshape((1, n_steps, 1)) #GETTING ERROR HERE 
         yhat = model.predict(x_input, verbose=0)
         #print("{} day output {}".format(i,yhat))
         temp_input.extend(yhat[0].tolist())

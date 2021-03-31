@@ -11,6 +11,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
 import yfinance as yf
 from tensorflow.keras.models import load_model
+import os 
 def create_dataset(dataset, time_step):
     dataX = []
     dataY = []
@@ -22,7 +23,7 @@ def create_dataset(dataset, time_step):
 
     return np.array(dataX), np.array(dataY)
 
-def predict(form_val):
+def predict_share(form_val):
     ticker_names={'CIPLA':'CIPLA.NS', 'MARUTI':'MARUTI.NS', 'TCS':'TCS.NS', 'HEROMOTOCO':'HEROMOTOCO.NS', 'RELIANCE':'RELIANCE.NS', 
     'ITC':'ITC.NS', 'ONGC':'ONGC.NS', 'KOTAK':'KOTAKBANK.NS', 'INDUSINDBK':'INDUSINDBK.NS', 'HDFCLIFE':'HDFCLIFE.NS',
     'ULTRACEMCO':'ULTRACEMCO.NS', 'MM':'MM.NS', 'WIPRO':'WIPRO.NS', 'NTPC':'NTPC.NS', 'COALINDIA':'COALINDIA.NS', 
@@ -100,13 +101,14 @@ def predict(form_val):
 
     df = close_data.tolist()
     df.extend(lst_output)
-    img=plt.plot(df[len(close_data)-100:])
-    plt.show()
+    plt.plot(df[len(close_data)-100:])
+    #plt.show()
 
     df = scaler.inverse_transform(df).tolist()
 
     plt.plot(df)
-    plt.show()
+    #plt.show()
+    save_results_to = 'C:/Users/madih/OneDrive/Documents/GitHub/Stock-Market-Predictor/Webpage/maincode/static/'
+    plt.savefig(save_results_to + 'test.png', dpi = 300)
 
 
-predict('CIPLA')
