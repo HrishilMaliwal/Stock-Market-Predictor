@@ -16,12 +16,13 @@ def preprocess(df):
     return df
 
 df = pd.read_csv("df1.csv")
-df=preprocess(df)
+df = preprocess(df)
 close_data = df['Close'].astype('float64')
-df=df.drop('Adj Close',axis=1)
+df = df.drop('Adj Close', axis=1)
 
 plt.plot(close_data)
 plt.show()
+
 #lstm sensitive to scalability
 scaler = MinMaxScaler(feature_range=(0, 1))
 close_data = scaler.fit_transform(np.array(close_data).reshape(-1, 1))
@@ -68,9 +69,6 @@ test_predict = model.predict(X_test)#output for testing data(test output)
 train_predict = scaler.inverse_transform(train_predict)#inversing the minmax scaler
 test_predict = scaler.inverse_transform(test_predict)
 
-'''math.sqrt(mean_squared_error(y_train,train_predict))
-# math.sqrt(mean_squared_error(y_test,test_predict))
-'''
 look_back = 500
 trainPredictPlot = np.empty_like(close_data) 
 trainPredictPlot[:, :] = np.nan
