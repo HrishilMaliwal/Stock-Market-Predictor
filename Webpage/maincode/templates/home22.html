@@ -1,0 +1,92 @@
+
+
+{% extends "layout.html" %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+<h1>Welcome!</h1>
+
+<style>
+body {
+  font-family: Arial;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+form.example input[type=text] {
+  position: relative;
+  padding: 10px;
+  font-size: 17px;
+  border: 2px solid rgb(147, 113, 190);
+  float: left;
+  width: 80%;
+  background: #f1f1f1;
+}
+
+form.example button {
+  float: right;
+  width: 20%;
+  padding: 10px;
+  background: #000000;
+  color: white;
+  font-size: 17px;
+  border: 2px solid hsl(229, 29%, 45%);
+  border-left: none;
+  cursor: pointer;
+}
+
+form.example button:hover {
+  background: rgb(80, 199, 56);
+}
+
+form.example::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+</style>
+</head>
+<body>
+    <br><br>
+
+<form class="example" action="#" method="POST" style="margin:auto;max-width:500px">
+<label for="stock">Choose a Stock:</label>
+<select name="stock" id="stock">
+  <option value="CIPLA">CIPLA</option>
+  <option value="MARUTI">MARUTI</option>
+  <option value="TCS">TCS</option>
+  <option value="HEROMOTOCO">HEROMOTOCO</option>
+  <option value="RELIANCE">RELIANCE</option>
+  <option value="ULTRACEMCO">ULTRACEMCO</option>
+  <option value="MM">MM</option>
+  <option value="WIPRO">WIPRO</option>
+  <option value="NTPC">NTPC</option>
+  <option value="COALINDIA">COALINDIA</option>
+  <option value="BAJFINANCE">BAJFINANCE</option>
+  <option value="ICICIBANK">ICICIBANK</option>
+  <option value="BRITANNIA">BRITANNIA</option>
+  <option value="SHREECEM">SHREECEM</option>
+  <option value="LT">LT</option>
+  <option value="TECHM">TECHM</option>
+  <option value="GRASIM">GRASIM</option>
+  <option value="NESTLEIND">NESTLEIND</option>
+  <option value="BAJAJ-AUTO">BAJAJ-AUTO</option>
+  <option value="BHARTIARTL">BHARTIARTL</option>
+  <option value="GAIL">GAIL</option>
+  <option value="TITAN">TITAN</option>
+  <option value="HINDALCO">HINDALCO</option>
+  <option value="BAJAJFINSV">BAJAJFINSV</option>
+  <option value="TATASTEEL">TATASTEEL</option>
+  
+
+</select>
+<button type="submit"><i class="fa fa-search"></i></button>
+</form>
+</body>
+
+   
+{% endblock content %}
+ 

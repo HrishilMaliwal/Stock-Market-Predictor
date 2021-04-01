@@ -22,7 +22,27 @@ def create_dataset(dataset, time_step):
         dataY.append(temp2)
 
     return np.array(dataX), np.array(dataY)
+def show_anal(form_val):
+    ticker_names={'CIPLA':'CIPLA.NS', 'MARUTI':'MARUTI.NS', 'TCS':'TCS.NS', 'HEROMOTOCO':'HEROMOTOCO.NS', 'RELIANCE':'RELIANCE.NS', 
+    'ITC':'ITC.NS', 'ONGC':'ONGC.NS', 'KOTAK':'KOTAKBANK.NS', 'INDUSINDBK':'INDUSINDBK.NS', 'HDFCLIFE':'HDFCLIFE.NS',
+    'ULTRACEMCO':'ULTRACEMCO.NS', 'MM':'MM.NS', 'WIPRO':'WIPRO.NS', 'NTPC':'NTPC.NS', 'COALINDIA':'COALINDIA.NS', 
+    'BAJFINANCE':'BAJFINANCE.NS', 'ICICIBANK':'ICICIBANK.NS', 'BRITANNIA':'BRITANNIA.NS','SHREECEM':'SHREECEM.NS', 
+    'LT':'LT.NS','TECHM': 'TECHM.NS', 'GRASIM':'GRASIM.NS', 'NESTLEIND':'NESTLEIND.NS','BAJAJ-AUTO': 'BAJAJ-AUTO.NS', 
+    'BHARTIARTL':'BHARTIARTL.NS','GAIL': 'GAIL.NS', 'TITAN':'TITAN.NS', 'HINDALCO':'HINDALCO.NS', 'BAJAJFINSV':'BAJAJFINSV.NS', 
+    'TATASTEEL':'TATASTEEL.NS'}
+    df_tick=ticker_names.get(form_val)
+    print(df_tick)
+    df=yf.download(df_tick)
+    df = df.drop('Adj Close', axis=1)
+    df=df.fillna(method='ffill')
+    close_data = df['Close'].astype('float64')
+    plt.plot(close_data)
+    plt.xlabel('Time')
+    plt.ylabel('Price')
+    save_results_to = 'C:/Users/madih/OneDrive/Desktop/Stock-Market-Predictor/Webpage/maincode/static/'
+    plt.savefig(save_results_to + 'anal.png', dpi = 300)
 
+    
 def predict_share(form_val):
     ticker_names={'CIPLA':'CIPLA.NS', 'MARUTI':'MARUTI.NS', 'TCS':'TCS.NS', 'HEROMOTOCO':'HEROMOTOCO.NS', 'RELIANCE':'RELIANCE.NS', 
     'ITC':'ITC.NS', 'ONGC':'ONGC.NS', 'KOTAK':'KOTAKBANK.NS', 'INDUSINDBK':'INDUSINDBK.NS', 'HDFCLIFE':'HDFCLIFE.NS',
@@ -102,13 +122,12 @@ def predict_share(form_val):
     df = close_data.tolist()
     df.extend(lst_output)
     plt.plot(df[len(close_data)-100:])
+    plt.xlabel('Time')
+    plt.ylabel('Price')
     #plt.show()
 
-    df = scaler.inverse_transform(df).tolist()
-
-    plt.plot(df)
     #plt.show()
-    save_results_to = 'C:/Users/madih/OneDrive/Documents/GitHub/Stock-Market-Predictor/Webpage/maincode/static/'
+    save_results_to = 'C:/Users/madih/OneDrive/Desktop/Stock-Market-Predictor/Webpage/maincode/static/'
     plt.savefig(save_results_to + 'test.png', dpi = 300)
 
 
