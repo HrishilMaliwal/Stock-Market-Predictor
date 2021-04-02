@@ -39,7 +39,7 @@ def show_anal(form_val):
     plt.plot(close_data)
     plt.xlabel('Time')
     plt.ylabel('Price')
-    save_results_to = 'C:/Users/madih/OneDrive/Desktop/Stock-Market-Predictor/Webpage/maincode/static/'
+    save_results_to = 'C:/Users/madih/OneDrive/Documents/Github/Stock-Market-Predictor/Webpage/maincode/static/'
     plt.savefig(save_results_to + 'anal.png', dpi = 300)
 
     
@@ -127,7 +127,7 @@ def predict_share(form_val):
     #plt.show()
 
     #plt.show()
-    save_results_to = 'C:/Users/madih/OneDrive/Desktop/Stock-Market-Predictor/Webpage/maincode/static/'
+    save_results_to = 'C:/Users/madih/OneDrive/Documents/Github/Stock-Market-Predictor/Webpage/maincode/static/'
     plt.savefig(save_results_to + 'test.png', dpi = 300)
 
 
