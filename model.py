@@ -82,6 +82,7 @@ plt.plot(scaler.inverse_transform(close_data))
 plt.plot(trainPredictPlot)
 plt.plot(testPredictPlot)
 plt.show()
+
 abc=len(test_data)-500
 x_input = test_data[abc:].reshape(1, -1)
 
@@ -119,6 +120,7 @@ print(lst_output)
 
 day_new = np.arange(1, 501)
 day_pred = np.arange(501, 531)
+
 abc2=len(close_data)-500
 plt.plot(day_new, scaler.inverse_transform(close_data[abc2:]))
 plt.plot(day_pred, scaler.inverse_transform(lst_output))
