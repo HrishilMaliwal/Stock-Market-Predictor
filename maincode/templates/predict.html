@@ -1,0 +1,19 @@
+{% extends "loggedin_layout.html" %}
+{% block content %}
+<style>
+    img {
+  border: 1px solid #ddd;
+  padding: 5px;
+  width: 600px;
+}
+
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+</style>
+    <body>
+        <h1>Prediction:</h1>
+        <figure><img src="{{url_for('static', filename='test.png')}}"></figure>
+    </body>
+{% endblock content %}
+ 
