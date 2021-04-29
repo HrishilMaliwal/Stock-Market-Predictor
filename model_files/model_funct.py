@@ -43,7 +43,7 @@ def show_anal(form_val):
     plt.plot(close_data)
     plt.xlabel('Time')
     plt.ylabel('Price')
-    save_results_to = 'H:/Projects/se project working/se project working/Stock-Market-Predictor/Webpage/maincode/static/'
+    save_results_to = 'H:/Projects/Stock-Market-Predictor/maincode/static/'
     plt.savefig(save_results_to + 'anal.png', dpi=300)
 
 
@@ -117,6 +117,7 @@ def predict_share(form_val):
             print(len(temp_input))
             lst_output.extend(yhat.tolist())
             i = i + 1
+
     day_new = np.arange(1, 501)
     day_pred = np.arange(501, 531)
     abc2 = len(close_data)-500
@@ -128,8 +129,6 @@ def predict_share(form_val):
     plt.plot(df[len(close_data)-100:])
 
     plt.ylabel('Price')
-    # plt.show()
 
-    # plt.show()
-    save_results_to = 'H:/Projects/se project working/se project working/Stock-Market-Predictor/Webpage/maincode/static/'
+    save_results_to = 'H:/Projects/Stock-Market-Predictor/maincode/static/'
     plt.savefig(save_results_to + 'test.png', dpi=300)
