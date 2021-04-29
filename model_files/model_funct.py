@@ -67,7 +67,8 @@ def predict_share(form_val):
     print(df_tick, model_name)
     df = yf.download(df_tick)
     # print(df)
-    model = load_model(model_name)
+    model = load_model(
+        'H:/Projects/Stock-Market-Predictor/model_files/' + model_name)
     df = df.fillna(method='ffill')
     close_data = df['Close'].astype('float64')
     df = df.drop('Adj Close', axis=1)

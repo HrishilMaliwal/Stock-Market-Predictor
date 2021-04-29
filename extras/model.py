@@ -11,18 +11,20 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import LSTM
 from tensorflow.keras.models import load_model
 
+
 def preprocess(df):
     df.fillna(method='ffill', inplace=True)
     return df
 
+
 df = pd.read_csv("df1.csv")
-df=preprocess(df)
+df = preprocess(df)
 close_data = df['Close'].astype('float64')
-df=df.drop('Adj Close',axis=1)
+df = df.drop('Adj Close', axis=1)
 
 plt.plot(close_data)
 plt.show()
-#lstm sensitive to scalability
+# lstm sensitive to scalability
 scaler = MinMaxScaler(feature_range=(0, 1))
 close_data = scaler.fit_transform(np.array(close_data).reshape(-1, 1))
 
@@ -31,7 +33,9 @@ test_size = len(close_data) - train_size
 train_data = close_data[:train_size]
 test_data = close_data[train_size:]
 
-#creating a dataset for timesteps wrt lstm
+# creating a dataset for timesteps wrt lstm
+
+
 def create_dataset(dataset, time_step):
     dataX = []
     dataY = []
@@ -52,39 +56,41 @@ X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], 1)
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], 1)
 
 model = Sequential()
-model.add(LSTM(50, return_sequences=True, input_shape=(500, 1)))#shape is 500 bec 500 timesteps
-model.add(LSTM(50))#stacked lstm 
+# shape is 500 bec 500 timesteps
+model.add(LSTM(50, return_sequences=True, input_shape=(500, 1)))
+model.add(LSTM(50))  # stacked lstm
 model.add(Dense(1))
 model.compile(loss='mean_squared_error', optimizer='adam')
 
-model.fit(X_train,y_train,validation_data=(X_test,y_test),epochs=50,batch_size=64,verbose=1)
+model.fit(X_train, y_train, validation_data=(
+    X_test, y_test), epochs=50, batch_size=64, verbose=1)
 
 
 model.save('HINDALCO.h5')
 
-train_predict = model.predict(X_train) #output for training data(results expected to be good)
-test_predict = model.predict(X_test)#output for testing data(test output)
+# output for training data(results expected to be good)
+train_predict = model.predict(X_train)
+test_predict = model.predict(X_test)  # output for testing data(test output)
 
-train_predict = scaler.inverse_transform(train_predict)#inversing the minmax scaler
+train_predict = scaler.inverse_transform(
+    train_predict)  # inversing the minmax scaler
 test_predict = scaler.inverse_transform(test_predict)
 
-'''math.sqrt(mean_squared_error(y_train,train_predict))
-# math.sqrt(mean_squared_error(y_test,test_predict))
-'''
 look_back = 500
-trainPredictPlot = np.empty_like(close_data) 
+trainPredictPlot = np.empty_like(close_data)
 trainPredictPlot[:, :] = np.nan
 trainPredictPlot[look_back:len(train_predict)+look_back, :] = train_predict
 
 testPredictPlot = np.empty_like(close_data)
 testPredictPlot[:, :] = np.nan
-testPredictPlot[len(train_predict)+(look_back*2)+1:len(close_data)-1, :] = test_predict
+testPredictPlot[len(train_predict)+(look_back*2) +
+                1:len(close_data)-1, :] = test_predict
 
 plt.plot(scaler.inverse_transform(close_data))
 plt.plot(trainPredictPlot)
 plt.plot(testPredictPlot)
 plt.show()
-abc=len(test_data)-500
+abc = len(test_data)-500
 x_input = test_data[abc:].reshape(1, -1)
 
 temp_input = list(x_input)
@@ -98,19 +104,19 @@ while(i < 30):
     if(len(temp_input) > 500):
         x_input = np.array(temp_input[1:])
         #print("{} day input {}".format(i, x_input))
-        x_input=x_input.reshape(1,-1)
-        x_input = x_input.reshape((1, n_steps, 1)) #GETTING ERROR HERE 
+        x_input = x_input.reshape(1, -1)
+        x_input = x_input.reshape((1, n_steps, 1))  # GETTING ERROR HERE
         yhat = model.predict(x_input, verbose=0)
         #print("{} day output {}".format(i,yhat))
         temp_input.extend(yhat[0].tolist())
-        temp_input=temp_input[1:]
+        temp_input = temp_input[1:]
         lst_output.extend(yhat.tolist())
         i = i + 1
-    
+
     else:
         x_input = x_input.reshape(1, n_steps, 1)
         yhat = model.predict(x_input, verbose=0)
-        #print(yhat[0])
+        # print(yhat[0])
         temp_input.extend(yhat[0].tolist())
         print(len(temp_input))
         lst_output.extend(yhat.tolist())
@@ -121,7 +127,7 @@ print(lst_output)
 
 day_new = np.arange(1, 501)
 day_pred = np.arange(501, 531)
-abc2=len(close_data)-500
+abc2 = len(close_data)-500
 plt.plot(day_new, scaler.inverse_transform(close_data[abc2:]))
 plt.plot(day_pred, scaler.inverse_transform(lst_output))
 
@@ -134,7 +140,6 @@ df = scaler.inverse_transform(df).tolist()
 
 plt.plot(df)
 plt.show()
-
 
 
 # print(close_data)
